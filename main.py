@@ -5,13 +5,20 @@ from google.oauth2 import service_account
 from theater_show import display_theater_content, append_theater_row, theater_form
 from video_call import display_video_call_content, append_video_call_row, video_call_form
 from utils import apply_row_formatting, get_sheet_id
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 # Function to connect to Google Sheets API
 def connect_to_gsheet():
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
     try:
+        st.write("Loading credentials from credentials.json...")
         creds = service_account.Credentials.from_service_account_file('credentials.json', scopes=SCOPES)
+        st.write("Credentials loaded successfully.")
+        st.write(f"Service account email: {creds.service_account_email}")
         service = build('sheets', 'v4', credentials=creds)
+        st.write("Google Sheets service built successfully.")
         return service
     except Exception as e:
         st.error(f"Failed to connect to Google Sheets API: {e}")

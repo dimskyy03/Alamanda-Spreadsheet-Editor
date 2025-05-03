@@ -46,7 +46,7 @@ def apply_row_formatting(service, spreadsheet_id, sheet_id, row_index, is_header
                 "blue": 1.0
             }  # Cyan for month rows in "Theater1"
 
-        end_column = 5 if sheet_name == "Theater1" else 4  # 5 columns for Theater1, 4 for Video Call
+        end_column = 5 if sheet_name == "theater_test" else 4  # 5 columns for Theater1, 4 for Video Call
 
         requests = [
             {
