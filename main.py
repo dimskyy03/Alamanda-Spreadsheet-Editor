@@ -10,12 +10,9 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 # Function to connect to Google Sheets API
-# Function to connect to Google Sheets API
 def connect_to_gsheet():
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
     try:
-        # Access credentials from secrets.toml
-        st.write("Loading credentials from secrets.toml...")
         creds_dict = {
             "type": st.secrets["gcp_service_account"]["type"],
             "project_id": st.secrets["gcp_service_account"]["project_id"],
@@ -31,11 +28,8 @@ def connect_to_gsheet():
         
         # Create credentials object from the dictionary
         creds = service_account.Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
-        st.write("Credentials loaded successfully.")
-        st.write(f"Service account email: {creds.service_account_email}")
         # Build service with cache disabled
         service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
-        st.write("Google Sheets service built successfully.")
         return service
     except Exception as e:
         st.error(f"Failed to connect to Google Sheets API: {e}")
@@ -43,12 +37,11 @@ def connect_to_gsheet():
 
 # Main Streamlit app function
 def main():
-    st.title("Google Sheet Inspector and Row Adder")
+    st.title("Alamanda Google Sheet Updater")
 
     # Sidebar for sheet selection
     sheet_options = ["theater_test", "VC 2025_test"]
     selected_sheet = st.sidebar.selectbox("Select Sheet", sheet_options)
-    st.write(f"Selected Sheet: {selected_sheet}")
 
     # Connect to the Google Sheet
     service = connect_to_gsheet()
